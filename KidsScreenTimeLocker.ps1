@@ -28,16 +28,21 @@ Add-NativeMethods
 # Dialog prompt
 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
 $intReturn = $timertimemins = [Microsoft.VisualBasic.Interaction]::InputBox("Enter time in minutes", "Timer Time", 60)
+
+if ($intReturn -eq 0 -or $intReturn -eq "") { exit }
+
 $timertime = ([int]$timertimemins * 60)
 
 # Timer Popup
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 $Form = New-Object System.Windows.Forms.Form
-$Font = New-Object System.Drawing.Font("BadaBoom BB",18,[System.Drawing.FontStyle]::Regular)
+$Font = New-Object System.Drawing.Font("Impact",18,[System.Drawing.FontStyle]::Regular)
 $Form.Font = $Font
 $Form.Width = 350
 $Form.Height = 80
+$Form.AutoSize = $True
+$Form.AutoSizeMode = "GrowAndShrink"
 $script:Label = New-Object System.Windows.Forms.Label
 $script:Label.AutoSize = $true
 $script:Form.Controls.Add($Label)
